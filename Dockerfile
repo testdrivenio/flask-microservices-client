@@ -7,6 +7,10 @@ WORKDIR /usr/src/app
 # add `/usr/src/app/node_modules/.bin` to $PATH
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
+# add environment variables
+ENV NODE_ENV development
+ENV REACT_APP_USERS_SERVICE_URL ${REACT_APP_USERS_SERVICE_URL}
+
 # install and cache app dependencies
 ADD package.json /usr/src/app/package.json
 RUN npm install
