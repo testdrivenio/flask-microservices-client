@@ -6,7 +6,7 @@ const NavBar = (props) => (
   <Navbar inverse collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <a href="/">{props.title}</a>
+        <span>{props.title}</span>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
@@ -18,20 +18,28 @@ const NavBar = (props) => (
         <LinkContainer to="/about">
           <NavItem eventKey={2}>About</NavItem>
         </LinkContainer>
-        <LinkContainer to="/status">
-          <NavItem eventKey={3}>User Status</NavItem>
-        </LinkContainer>
+        {props.isAuthenticated &&
+          <LinkContainer to="/status">
+            <NavItem eventKey={3}>User Status</NavItem>
+          </LinkContainer>
+        }
       </Nav>
       <Nav pullRight>
-        <LinkContainer to="/register">
-          <NavItem eventKey={1}>Register</NavItem>
-        </LinkContainer>
-        <LinkContainer to="/login">
-          <NavItem eventKey={2}>Log In</NavItem>
-        </LinkContainer>
-        <LinkContainer to="/logout">
-          <NavItem eventKey={3}>Log Out</NavItem>
-        </LinkContainer>
+        {!props.isAuthenticated &&
+          <LinkContainer to="/register">
+            <NavItem eventKey={1}>Register</NavItem>
+          </LinkContainer>
+        }
+        {!props.isAuthenticated &&
+          <LinkContainer to="/login">
+            <NavItem eventKey={2}>Log In</NavItem>
+          </LinkContainer>
+        }
+        {props.isAuthenticated &&
+          <LinkContainer to="/logout">
+            <NavItem eventKey={3}>Log Out</NavItem>
+          </LinkContainer>
+        }
       </Nav>
     </Navbar.Collapse>
   </Navbar>
