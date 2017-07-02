@@ -142,7 +142,7 @@ class Form extends Component {
           formType={this.props.formType}
           formRules={this.state.formRules}
         />
-        <form onSubmit={ (event) => this.handleUserFormSubmit(event) }>
+        <form onSubmit={(event) => this.handleUserFormSubmit(event)}>
           {this.props.formType === 'register' &&
             <div className="form-group">
               <input
