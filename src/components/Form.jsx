@@ -80,6 +80,7 @@ class Form extends Component {
     const formType = this.props.formType;
     const rules = this.state.formRules;
     const formData = this.state.formData;
+    this.setState({valid: false});
     for (const rule of rules) {
       rule.valid = false;
     }
