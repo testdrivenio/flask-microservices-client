@@ -12,7 +12,6 @@ const UsersList = (props) => {
             <th>User ID</th>
             <th>Email</th>
             <th>Username</th>
-            <th>Created Date</th>
           </tr>
         </thead>
         <tbody>
@@ -23,7 +22,6 @@ const UsersList = (props) => {
                   <td>{user.id}</td>
                   <td>{user.email}</td>
                   <td>{user.username}</td>
-                  <td>{user.created_at}</td>
                 </tr>
               )
             })

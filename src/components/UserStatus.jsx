@@ -47,7 +47,6 @@ class UserStatus extends Component {
           <li><strong>User ID:</strong> {this.state.id}</li>
           <li><strong>Email:</strong> {this.state.email}</li>
           <li><strong>Username:</strong> {this.state.username}</li>
-          <li><strong>Created Date:</strong> {this.state.created_at}</li>
         </ul>
       </div>
     )
