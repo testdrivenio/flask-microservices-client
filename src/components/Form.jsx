@@ -23,7 +23,7 @@ class Form extends Component {
         {
           id: 2,
           field: 'email',
-          name: 'Email must be greater than 10 characters.',
+          name: 'Email must be greater than 5 characters.',
           valid: false
         },
         {
@@ -88,7 +88,7 @@ class Form extends Component {
       if (formData.username.length > 5) rules[0].valid = true;
     }
     if (formType === 'login') rules[0].valid = true;
-    if (formData.email.length > 10) rules[1].valid = true;
+    if (formData.email.length > 5) rules[1].valid = true;
     if (this.validateEmail(formData.email)) rules[2].valid = true;
     if (formData.password.length > 10) rules[3].valid = true;
     this.setState({formRules: rules})
