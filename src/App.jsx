@@ -5,10 +5,12 @@ import axios from 'axios';
 import UsersList from './components/UsersList';
 import About from './components/About';
 import NavBar from './components/NavBar';
-import Form from './components/Form';
 import Logout from './components/Logout';
 import UserStatus from './components/UserStatus';
 import Message from './components/Message';
+import Footer from './components/Footer'
+import RegisterForm from './components/forms/RegisterForm';
+import LoginForm from './components/forms/LoginForm';
 
 class App extends Component {
   constructor() {
@@ -85,16 +87,14 @@ class App extends Component {
                 )} />
                 <Route exact path='/about' component={About}/>
                 <Route exact path='/register' render={() => (
-                  <Form
-                    formType={'register'}
+                  <RegisterForm
                     isAuthenticated={this.state.isAuthenticated}
                     loginUser={this.loginUser.bind(this)}
                     createMessage={this.createMessage.bind(this)}
                   />
                 )} />
                 <Route exact path='/login' render={() => (
-                  <Form
-                    formType={'login'}
+                  <LoginForm
                     isAuthenticated={this.state.isAuthenticated}
                     loginUser={this.loginUser.bind(this)}
                     createMessage={this.createMessage.bind(this)}
@@ -115,6 +115,7 @@ class App extends Component {
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
     )
   }

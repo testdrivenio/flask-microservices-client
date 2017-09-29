@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import FormErrors from './FormErrors'
 
-class Form extends Component {
+class RegisterForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -41,7 +41,7 @@ class Form extends Component {
       ],
       valid: false
     }
-    this.handleUserFormSubmit = this.handleUserFormSubmit.bind(this);
+    this.handleRegisterFormSubmit = this.handleRegisterFormSubmit.bind(this);
   }
   componentDidMount() {
     this.clearForm();
@@ -77,17 +77,13 @@ class Form extends Component {
     return true;
   }
   validateForm() {
-    const formType = this.props.formType;
     const rules = this.state.formRules;
     const formData = this.state.formData;
     this.setState({valid: false});
     for (const rule of rules) {
       rule.valid = false;
     }
-    if (formType === 'register') {
-      if (formData.username.length > 5) rules[0].valid = true;
-    }
-    if (formType === 'login') rules[0].valid = true;
+    if (formData.username.length > 5) rules[0].valid = true;
     if (formData.email.length > 5) rules[1].valid = true;
     if (this.validateEmail(formData.email)) rules[2].valid = true;
     if (formData.password.length > 10) rules[3].valid = true;
@@ -99,36 +95,21 @@ class Form extends Component {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
-  handleUserFormSubmit(event) {
+  handleRegisterFormSubmit(event) {
     event.preventDefault();
-    const formType = this.props.formType
-    let data;
-    if (formType === 'login') {
-      data = {
-        email: this.state.formData.email,
-        password: this.state.formData.password
-      }
+    const data = {
+      username: this.state.formData.username,
+      email: this.state.formData.email,
+      password: this.state.formData.password
     }
-    if (formType === 'register') {
-      data = {
-        username: this.state.formData.username,
-        email: this.state.formData.email,
-        password: this.state.formData.password
-      }
-    }
-    const url = `${process.env.REACT_APP_USERS_SERVICE_URL}/auth/${formType}`
+    const url = `${process.env.REACT_APP_USERS_SERVICE_URL}/auth/register`
     axios.post(url, data)
     .then((res) => {
       this.clearForm();
       this.props.loginUser(res.data.auth_token);
     })
     .catch((err) => {
-      if (formType === 'login') {
-        this.props.createMessage('User does not exist.', 'danger')
-      }
-      if (formType === 'register') {
-        this.props.createMessage('That user already exists.', 'danger')
-      }
+      this.props.createMessage('That user already exists.', 'danger')
     })
   }
   render() {
@@ -137,30 +118,27 @@ class Form extends Component {
     }
     return (
       <div>
-        <h1 style={{'textTransform':'capitalize'}}>{this.props.formType}</h1>
+        <h1>Register</h1>
         <hr/><br/>
         <FormErrors
-          formType={this.props.formType}
           formRules={this.state.formRules}
         />
-        <form onSubmit={(event) => this.handleUserFormSubmit(event)}>
-          {this.props.formType === 'register' &&
-            <div className="form-group">
-              <input
-                name="username"
-                className="form-control input-lg"
-                type="text"
-                placeholder="Enter a username"
-                required
-                value={this.state.formData.username}
-                onChange={this.handleFormChange.bind(this)}
-              />
-            </div>
-          }
+        <form onSubmit={(event) => this.handleRegisterFormSubmit(event)}>
+          <div className="form-group">
+            <input
+              name="username"
+              className="form-control input-md"
+              type="text"
+              placeholder="Enter a username"
+              required
+              value={this.state.formData.username}
+              onChange={this.handleFormChange.bind(this)}
+            />
+          </div>
           <div className="form-group">
             <input
               name="email"
-              className="form-control input-lg"
+              className="form-control input-md"
               type="email"
               placeholder="Enter an email address"
               required
@@ -171,7 +149,7 @@ class Form extends Component {
           <div className="form-group">
             <input
               name="password"
-              className="form-control input-lg"
+              className="form-control input-md"
               type="password"
               placeholder="Enter a password"
               required
@@ -181,7 +159,7 @@ class Form extends Component {
           </div>
           <input
             type="submit"
-            className="btn btn-primary btn-lg btn-block"
+            className="btn btn-primary btn-md"
             value="Submit"
             disabled={!this.state.valid}
           />
@@ -191,4 +169,4 @@ class Form extends Component {
   }
 }
 
-export default Form
+export default RegisterForm

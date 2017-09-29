@@ -2,42 +2,43 @@ import React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import './NavBar.css';
+
 const NavBar = (props) => (
-  <Navbar inverse collapseOnSelect>
+  <Navbar collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <span>{props.title}</span>
+        <LinkContainer to="/">
+          <span>{props.title}</span>
+        </LinkContainer>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
     <Navbar.Collapse>
       <Nav>
-        <LinkContainer to="/">
-          <NavItem eventKey={1}>Home</NavItem>
-        </LinkContainer>
         <LinkContainer to="/about">
-          <NavItem eventKey={2}>About</NavItem>
+          <NavItem>About</NavItem>
         </LinkContainer>
         {props.isAuthenticated &&
           <LinkContainer to="/status">
-            <NavItem eventKey={3}>User Status</NavItem>
+            <NavItem>User Status</NavItem>
           </LinkContainer>
         }
       </Nav>
       <Nav pullRight>
         {!props.isAuthenticated &&
           <LinkContainer to="/register">
-            <NavItem eventKey={1}>Register</NavItem>
+            <NavItem>Register</NavItem>
           </LinkContainer>
         }
         {!props.isAuthenticated &&
           <LinkContainer to="/login">
-            <NavItem eventKey={2}>Log In</NavItem>
+            <NavItem>Log In</NavItem>
           </LinkContainer>
         }
         {props.isAuthenticated &&
           <LinkContainer to="/logout">
-            <NavItem eventKey={3}>Log Out</NavItem>
+            <NavItem>Log Out</NavItem>
           </LinkContainer>
         }
       </Nav>
