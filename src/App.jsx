@@ -81,6 +81,9 @@ class App extends Component {
               <br/>
               <Switch>
                 <Route exact path='/' render={() => (
+                  <p>Something.</p>
+                )} />
+                <Route exact path='/users' render={() => (
                   <UsersList
                     users={this.state.users}
                   />
