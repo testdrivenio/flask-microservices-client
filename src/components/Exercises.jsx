@@ -3,14 +3,21 @@ import axios from 'axios';
 import AceEditor from 'react-ace';
 import 'brace/mode/python';
 import 'brace/theme/solarized_dark';
-import { Button } from 'react-bootstrap';
+import { Button, Glyphicon } from 'react-bootstrap';
+
+import './Exercises.css';
+
 
 class Exercises extends Component {
   constructor (props) {
     super(props)
     this.state = {
       exercises: [],
-      aceEditorValue: '# Enter your code here.'
+      aceEditorValue: '# Enter your code here.',
+      isDisabled: false,
+      showGrading: false,
+      showCorrect: false,
+      showIncorrect: false
     }
   }
   componentDidMount() {
@@ -24,19 +31,51 @@ class Exercises extends Component {
   onChange(value) {
     this.setState({ aceEditorValue: value });
   }
+  updateScore(correct) {
+    const options = {
+      url: `${process.env.REACT_APP_EVAL_SERVICE_URL}/scores`,
+      method: 'patch',
+      data: {
+        exercise_id: this.state.exercises[0].id,
+        correct: correct
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${window.localStorage.authToken}`
+      }
+    };
+    return axios(options)
+  }
   submitExercise(event) {
     event.preventDefault();
-    const data = {
-      id: this.state.exercises[0].id,
-      code: this.state.aceEditorValue
+    const stateObject = {
+      showGrading: true,
+      isDisabled: true,
+      showCorrect: false,
+      showIncorrect: false
     }
-    const url = `${process.env.REACT_APP_EVAL_SERVICE_URL}/tbd`
+    this.setState(stateObject);
+    const data = {
+      answer: this.state.aceEditorValue
+    }
+    const url = `${process.env.REACT_APP_API_GATEWAY_URL}`
     axios.post(url, data)
+    .then((res) => {
+      stateObject.showGrading = false
+      stateObject.isDisabled = false
+      if (res.data) {stateObject.showCorrect = true};
+      if (!res.data) {stateObject.showIncorrect = true};
+      this.setState(stateObject);
+      return this.updateScore(res.data);
+    })
     .then((res) => {
       console.log(res);
     })
     .catch((err) => {
       console.log(err);
+      stateObject.showGrading = false
+      stateObject.isDisabled = false
+      this.setState(stateObject);
     })
   }
   render() {
@@ -76,11 +115,38 @@ class Exercises extends Component {
                   }}
                 />
                 {this.props.isAuthenticated &&
-                  <Button
-                    bsStyle="primary"
-                    bsSize="small"
-                    onClick={this.submitExercise.bind(this)}
-                  >Run Code</Button>
+                  <div>
+                    <Button
+                      bsStyle="primary"
+                      bsSize="small"
+                      onClick={this.submitExercise.bind(this)}
+                      disabled={this.state.isDisabled}
+                    >Run Code</Button>
+                  {this.state.showGrading &&
+                    <h4>
+                      &nbsp;
+                      <Glyphicon glyph="repeat" className="glyphicon-spin"/>
+                      &nbsp;
+                      Grading...
+                    </h4>
+                  }
+                  {this.state.showCorrect &&
+                    <h4>
+                      &nbsp;
+                      <Glyphicon glyph="ok" className="glyphicon-correct"/>
+                      &nbsp;
+                      Correct!
+                    </h4>
+                  }
+                  {this.state.showIncorrect &&
+                    <h4>
+                      &nbsp;
+                      <Glyphicon glyph="remove" className="glyphicon-incorrect"/>
+                      &nbsp;
+                      Incorrect!
+                    </h4>
+                  }
+                  </div>
                 }
               <br/><br/>
             </div>
