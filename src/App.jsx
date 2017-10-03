@@ -11,6 +11,7 @@ import Message from './components/Message';
 import Footer from './components/Footer'
 import RegisterForm from './components/forms/RegisterForm';
 import LoginForm from './components/forms/LoginForm';
+import Exercises from './components/Exercises';
 
 class App extends Component {
   constructor() {
@@ -81,6 +82,11 @@ class App extends Component {
               <br/>
               <Switch>
                 <Route exact path='/' render={() => (
+                  <Exercises
+                    isAuthenticated={this.state.isAuthenticated}
+                  />
+                )} />
+                <Route exact path='/users' render={() => (
                   <UsersList
                     users={this.state.users}
                   />
