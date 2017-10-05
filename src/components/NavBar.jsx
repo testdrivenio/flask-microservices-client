@@ -19,7 +19,7 @@ const NavBar = (props) => (
         <LinkContainer to="/about">
           <NavItem>About</NavItem>
         </LinkContainer>
-        <LinkContainer to="/users">
+        <LinkContainer to="/all-users">
           <NavItem>Users</NavItem>
         </LinkContainer>
         {props.isAuthenticated &&
