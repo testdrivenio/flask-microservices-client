@@ -61,6 +61,7 @@ class Exercises extends Component {
     }
     console.log('payload to lambda ->', data);
     const url = `${process.env.REACT_APP_API_GATEWAY_URL}`
+    console.log(url);
     axios.post(url, data)
     .then((test) => {
       console.log('response from lambda ->', test);
