@@ -58,15 +58,15 @@ class Exercises extends Component {
     const data = {
       answer: this.state.aceEditorValue
     }
-    const url = `${process.env.REACT_APP_API_GATEWAY_URL}`
+    const url = 'https://c0rue3ifh4.execute-api.us-east-1.amazonaws.com/v1/execute'
     axios.post(url, data)
-    .then((res) => {
+    .then((test) => {
       stateObject.showGrading = false
       stateObject.isDisabled = false
-      if (res.data) {stateObject.showCorrect = true};
-      if (!res.data) {stateObject.showIncorrect = true};
+      if (test.data) {stateObject.showCorrect = true};
+      if (!test.data) {stateObject.showIncorrect = true};
       this.setState(stateObject);
-      return this.updateScore(res.data);
+      return this.updateScore(test.data);
     })
     .then((res) => {
       console.log(res);
