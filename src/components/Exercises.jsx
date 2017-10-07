@@ -59,16 +59,18 @@ class Exercises extends Component {
     const data = {
       answer: this.state.aceEditorValue
     }
+    console.log('payload to lambda ->', data);
     const url = `${process.env.REACT_APP_API_GATEWAY_URL}`
     axios.post(url, data)
-    .then((res) => {
+    .then((test) => {
+      console.log('response from lambda ->', test);
       stateObject.showGrading = false
       stateObject.isDisabled = false
-      if (res.data) {stateObject.showCorrect = true};
-      if (!res.data) {stateObject.showIncorrect = true};
+      if (test.data) {stateObject.showCorrect = true};
+      if (!test.data) {stateObject.showIncorrect = true};
       this.setState(stateObject);
-      console.log('response from lambda ->', res);
-      return this.updateScore(res.data);
+      console.log('response from lambda ->', test);
+      return this.updateScore(test.data);
     })
     .then((res) => {
       console.log('response from exercises api ->', res);
