@@ -19,6 +19,7 @@ class Exercises extends Component {
       showCorrect: false,
       showIncorrect: false
     }
+    this.submitExercise = this.submitExercise.bind(this);
   }
   componentDidMount() {
     this.getExercises();
@@ -29,6 +30,7 @@ class Exercises extends Component {
     .catch((err) => { console.log(err); })
   }
   onChange(value) {
+    console.log(value);
     this.setState({ aceEditorValue: value });
   }
   updateScore(correct) {
@@ -119,7 +121,7 @@ class Exercises extends Component {
                     <Button
                       bsStyle="primary"
                       bsSize="small"
-                      onClick={this.submitExercise.bind(this)}
+                      onClick={(event) => this.submitExercise(event)}
                       disabled={this.state.isDisabled}
                     >Run Code</Button>
                   {this.state.showGrading &&
