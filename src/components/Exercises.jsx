@@ -19,7 +19,6 @@ class Exercises extends Component {
       showCorrect: false,
       showIncorrect: false
     }
-    this.submitExercise = this.submitExercise.bind(this);
   }
   componentDidMount() {
     this.getExercises();
@@ -30,10 +29,10 @@ class Exercises extends Component {
     .catch((err) => { console.log(err); })
   }
   onChange(value) {
-    console.log(value);
     this.setState({ aceEditorValue: value });
   }
   updateScore(correct) {
+    console.log('value passed to update score ->', correct);
     const options = {
       url: `${process.env.REACT_APP_EVAL_SERVICE_URL}/scores`,
       method: 'patch',
@@ -68,10 +67,11 @@ class Exercises extends Component {
       if (res.data) {stateObject.showCorrect = true};
       if (!res.data) {stateObject.showIncorrect = true};
       this.setState(stateObject);
+      console.log('response from lambda ->', res);
       return this.updateScore(res.data);
     })
     .then((res) => {
-      console.log(res);
+      console.log('response from exercises api ->', res);
     })
     .catch((err) => {
       console.log(err);
@@ -121,7 +121,7 @@ class Exercises extends Component {
                     <Button
                       bsStyle="primary"
                       bsSize="small"
-                      onClick={(event) => this.submitExercise(event)}
+                      onClick={this.submitExercise.bind(this)}
                       disabled={this.state.isDisabled}
                     >Run Code</Button>
                   {this.state.showGrading &&
