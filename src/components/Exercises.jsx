@@ -32,7 +32,6 @@ class Exercises extends Component {
     this.setState({ aceEditorValue: value });
   }
   updateScore(correct) {
-    console.log('value passed to update score ->', correct);
     const options = {
       url: `${process.env.REACT_APP_EVAL_SERVICE_URL}/scores`,
       method: 'patch',
@@ -59,22 +58,19 @@ class Exercises extends Component {
     const data = {
       answer: this.state.aceEditorValue
     }
-    console.log('payload to lambda ->', data);
-    const url = `https://c0rue3ifh4.execute-api.us-east-1.amazonaws.com/v1/execute`
+    const url = `${process.env.REACT_APP_EVAL_SERVICE_URL}`
     console.log(url);
     axios.post(url, data)
     .then((test) => {
-      console.log('response from lambda ->', test);
       stateObject.showGrading = false
       stateObject.isDisabled = false
       if (test.data) {stateObject.showCorrect = true};
       if (!test.data) {stateObject.showIncorrect = true};
       this.setState(stateObject);
-      console.log('response from lambda ->', test);
       return this.updateScore(test.data);
     })
     .then((res) => {
-      console.log('response from exercises api ->', res);
+      console.log(res);
     })
     .catch((err) => {
       console.log(err);
