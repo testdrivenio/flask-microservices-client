@@ -58,8 +58,7 @@ class Exercises extends Component {
     const data = {
       answer: this.state.aceEditorValue
     }
-    const url = `${process.env.REACT_APP_API_GATEWAY_URL}`
-    console.log(url);
+    const url = 'https://c0rue3ifh4.execute-api.us-east-1.amazonaws.com/v1/execute'
     axios.post(url, data)
     .then((test) => {
       stateObject.showGrading = false

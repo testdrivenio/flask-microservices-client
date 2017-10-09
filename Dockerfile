@@ -7,15 +7,13 @@ WORKDIR /usr/src/app
 # add `/usr/src/app/node_modules/.bin` to $PATH
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
-# add environment variables
+# add args and environment variables
 ARG REACT_APP_USERS_SERVICE_URL
 ENV REACT_APP_USERS_SERVICE_URL=$REACT_APP_USERS_SERVICE_URL
 ARG NODE_ENV
 ENV NODE_ENV=$NODE_ENV
 ARG REACT_APP_EVAL_SERVICE_URL
 ENV REACT_APP_EVAL_SERVICE_URL=$REACT_APP_EVAL_SERVICE_URL
-ARG REACT_APP_API_GATEWAY_URL
-ENV REACT_APP_API_GATEWAY_URL=$REACT_APP_API_GATEWAY_URL
 
 # install and cache app dependencies
 ADD package.json /usr/src/app/package.json
