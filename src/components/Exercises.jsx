@@ -60,7 +60,7 @@ class Exercises extends Component {
       answer: this.state.aceEditorValue
     }
     console.log('payload to lambda ->', data);
-    const url = `${process.env.REACT_APP_API_GATEWAY_URL}`
+    const url = `https://c0rue3ifh4.execute-api.us-east-1.amazonaws.com/v1/execute`
     console.log(url);
     axios.post(url, data)
     .then((test) => {
