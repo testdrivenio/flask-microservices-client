@@ -58,7 +58,7 @@ class Exercises extends Component {
     const data = {
       answer: this.state.aceEditorValue
     }
-    const url = `${process.env.REACT_APP_EVAL_SERVICE_URL}`
+    const url = `${process.env.REACT_APP_API_GATEWAY_URL}`
     console.log(url);
     axios.post(url, data)
     .then((test) => {
