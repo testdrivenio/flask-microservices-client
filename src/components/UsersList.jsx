@@ -10,7 +10,6 @@ const UsersList = (props) => {
         <thead>
           <tr>
             <th>User ID</th>
-            <th>Email</th>
             <th>Username</th>
           </tr>
         </thead>
